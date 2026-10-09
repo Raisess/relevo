@@ -1,7 +1,7 @@
 [project]
 name = "relevo"
 version = "0.1.0"
-description = "Add your description here"
+description = "Reliable webhook relay that receives, queues, and forwards events to downstream services, ensuring resilient delivery even when destination services are temporarily unavailable."
 readme = "README.md"
 authors = [
     { name = "Raisess", email = "raisechif@gmail.com" }
@@ -13,6 +13,9 @@ dependencies = [
 
 [project.scripts]
 relevo = "relevo:main"
+
+[tool.fastapi]
+entrypoint = "relevo.main:app"
 
 [build-system]
 requires = ["uv_build>=0.12.18,<0.13.0"]
