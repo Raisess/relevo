@@ -13,6 +13,7 @@ class AccountModel:
   status: AccountStatus
   name: str
   email: str
+  api_access_token: UUID
 
   @staticmethod
   def from_dict(data: dict) -> "AccountModel":
