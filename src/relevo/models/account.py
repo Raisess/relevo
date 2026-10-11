@@ -20,10 +20,11 @@ class AccountModel:
     status = AccountStatus.ACTIVE if data.get("status") == 1 else AccountStatus.INACTIVE
 
     return AccountModel(
-      id=data.get("id"),
+      id=UUID(data.get("id")),
       created_at=str(data.get("created_at")),
       updated_at=str(data.get("updated_at")),
       name=data.get("name"),
       email=data.get("email"),
+      api_access_token=UUID(data.get("api_access_token")),
       status=status,
     )

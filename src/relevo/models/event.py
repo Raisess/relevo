@@ -18,8 +18,8 @@ class EventModel(BaseModel):
   @staticmethod
   def from_dict(data: dict) -> "EventModel":
     return EventModel(
-      id=data.get("id"),
-      service_id=data.get("service_id"),
+      id=UUID(data.get("id")),
+      service_id=UUID(data.get("service_id")),
       method=data.get("method"),
       timestamp=str(data.get("timestamp")),
       url=data.get("url"),

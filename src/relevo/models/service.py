@@ -19,10 +19,10 @@ class ServiceModel:
     status = ServiceStatus.ACTIVE if data.get("status") == 1 else ServiceStatus.INACTIVE
 
     return ServiceModel(
-      id=data.get("id"),
+      id=UUID(data.get("id")),
       created_at=str(data.get("created_at")),
       updated_at=str(data.get("updated_at")),
-      account_id=data.get("account_id"),
+      account_id=UUID(data.get("account_id")),
       name=data.get("name"),
       status=status,
     )

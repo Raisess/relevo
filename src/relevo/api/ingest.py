@@ -4,7 +4,6 @@ from fastapi import APIRouter, Body, Path, Query
 
 router = APIRouter(prefix="/ingest")
 
-# @TODO: get caller url from header
 @router.post("/{service_id}")
 def ingest(
   service_id: Annotated[str, Path(title="A valid service id for the event to be registered.")],
