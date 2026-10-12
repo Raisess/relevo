@@ -27,7 +27,7 @@ def create(
       detail="Invalid or missing access token",
     )
 
-  return controller.create(name=data.name, email=data.email, status=account_status)
+  return controller.create(name=data.name, email=data.email, status=data.status)
 
 
 @router.get("/")
