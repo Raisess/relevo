@@ -1,13 +1,12 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Body, Path, Query
+from fastapi import APIRouter, Path, Request
 
 router = APIRouter(prefix="/ingest")
 
 @router.post("/{service_id}")
 def ingest(
   service_id: Annotated[str, Path(title="A valid service id for the event to be registered.")],
-  query_payload: Annotated[dict, Query(title="The webhook event query payload.")],
-  body_payload: Annotated[dict, Body(title="The webhook event body payload.")],
+  request: Request,
 ):
   return "pong"

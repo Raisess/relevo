@@ -1,10 +1,16 @@
+from dotenv import load_dotenv
+load_dotenv()
+
 from fastapi import FastAPI, APIRouter
 
 from relevo.api.account import router as account_router
 from relevo.api.health import router as health_router
 from relevo.api.ingest import router as ingest_router
 
+from relevo.database.sqlite import SQLite
+
 def create_app(routers: list[APIRouter]) -> FastAPI:
+  SQLite.connect("./sqlite.db")
   app = FastAPI(title="Relevo")
 
   for router in routers:

@@ -14,8 +14,8 @@ class ServiceRepository:
     status: ServiceStatus = ServiceStatus.ACTIVE,
   ) -> str:
     query = """
-      INSERT INTO service (id, name, status, account_id)
-      VALUES (%(id)s, %(name)s, %(status)s, %(account_id)s)
+      INSERT INTO services (id, name, status, account_id)
+      VALUES (:id, :name, :status, :account_id)
       RETURNING id;
     """
 
@@ -25,24 +25,24 @@ class ServiceRepository:
       "status": status.value,
       "account_id": account_id,
     }
-    results = self.db.query(sql=query, params=tuple(params.items()))
+    results = self.db.query(sql=query, params=params)
     if results:
       return results[0]["id"]
 
     raise Exception("Failed to create service")
 
   def find_by_id(self, id: UUID) -> ServiceModel | None:
-    query = "SELECT * FROM service WHERE id = %(id)s"
+    query = "SELECT * FROM services WHERE id = :id"
     params = {"id": str(id)}
-    results = self.db.query(sql=query, params=tuple(params.items()))
+    results = self.db.query(sql=query, params=params)
     if results:
       return ServiceModel.from_dict(results[0])
     return None
 
   def find_by_status(self, status: ServiceStatus) -> list[ServiceModel]:
-    query = "SELECT * FROM service WHERE status = %(status)s"
+    query = "SELECT * FROM services WHERE status = :status"
     params = {"status": status.value}
-    results = self.db.query(sql=query, params=tuple(params.items()))
+    results = self.db.query(sql=query, params=params)
     return [ServiceModel.from_dict(row) for row in results]
 
   def find_active(self) -> list[ServiceModel]:

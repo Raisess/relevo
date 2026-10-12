@@ -1,9 +1,12 @@
+import os
+
 # Constant for the access token header name
 ACCESS_TOKEN_HEADER = "x-access-token"
 # Constant for the access token header value
-ACCESS_TOKEN_VALUE = "secret"
+ACCESS_TOKEN_VALUE = os.getenv("ACCESS_TOKEN_VALUE")
 
 def validate_access_token(headers: dict):
+  print(ACCESS_TOKEN_VALUE, headers)
   """Validate that the x-access-token header is present and valid.
 
   Raises ValueError if the header is missing or invalid.
@@ -11,6 +14,9 @@ def validate_access_token(headers: dict):
   token = headers.get(ACCESS_TOKEN_HEADER)
   if not token:
     raise ValueError(f"Missing {ACCESS_TOKEN_HEADER} header")
+
+  if not ACCESS_TOKEN_VALUE:
+    raise ValueError("Missing token value")
 
   if token != ACCESS_TOKEN_VALUE:
     raise ValueError("Invalid token")

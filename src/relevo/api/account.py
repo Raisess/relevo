@@ -27,7 +27,6 @@ def create(
       detail="Invalid or missing access token",
     )
 
-  account_status = AccountStatus(data.status) if data.status else AccountStatus.ACTIVE
   return controller.create(name=data.name, email=data.email, status=account_status)
 
 
@@ -44,8 +43,7 @@ def list_all(
       detail="Invalid or missing access token",
     )
 
-  from relevo.models.account import AccountStatus as AS
-  return controller.find_by_status(AccountStatus.ACTIVE)
+  return controller.find_by_status()
 
 
 @router.get("/{account_id}")

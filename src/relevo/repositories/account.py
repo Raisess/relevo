@@ -14,28 +14,28 @@ class AccountRepository:
     status: AccountStatus = AccountStatus.ACTIVE,
   ) -> str:
     query = """
-      INSERT INTO account (id, name, email, status)
-      VALUES (%(id)s, %(name)s, %(email)s, %(status)s)
+      INSERT INTO accounts (id, name, email, status)
+      VALUES (:id, :name, :email, :status)
       RETURNING id;
     """
 
     params = {"id": str(uuid4()), "name": name, "email": email, "status": status.value}
-    results = self.db.query(sql=query, params=tuple(params.items()))
+    results = self.db.query(sql=query, params=params)
     if results:
       return results[0]["id"]
 
     raise Exception("Failed to create account")
 
   def find_by_id(self, id: UUID) -> AccountModel | None:
-    query = "SELECT * FROM account WHERE id = %(id)s"
+    query = "SELECT * FROM accounts WHERE id = :id"
     params = {"id": str(id)}
-    results = self.db.query(sql=query, params=tuple(params.items()))
+    results = self.db.query(sql=query, params=params)
     if results:
       return AccountModel.from_dict(results[0])
     return None
 
   def find_by_status(self, status: AccountStatus) -> list[AccountModel]:
-    query = "SELECT * FROM account WHERE status = %(status)s"
+    query = "SELECT * FROM accounts WHERE status = :status"
     params = {"status": status.value}
-    results = self.db.query(sql=query, params=tuple(params.items()))
+    results = self.db.query(sql=query, params=params)
     return [AccountModel.from_dict(row) for row in results]
