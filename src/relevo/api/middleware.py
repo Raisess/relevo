@@ -6,7 +6,6 @@ ACCESS_TOKEN_HEADER = "x-access-token"
 ACCESS_TOKEN_VALUE = os.getenv("ACCESS_TOKEN_VALUE")
 
 def validate_access_token(headers: dict):
-  print(ACCESS_TOKEN_VALUE, headers)
   """Validate that the x-access-token header is present and valid.
 
   Raises ValueError if the header is missing or invalid.
