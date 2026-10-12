@@ -2,7 +2,6 @@ from argon2 import PasswordHasher
 
 from uuid import uuid4
 
-from relevo.api.middleware import ACCESS_TOKEN_HEADER, validate_access_token
 from relevo.controllers.exceptions.account import AccountNotFoundHttpException
 from relevo.models.account import AccountModel, AccountStatus
 from relevo.repositories.account import AccountRepository
