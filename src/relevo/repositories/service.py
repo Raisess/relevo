@@ -47,3 +47,9 @@ class ServiceRepository:
 
   def find_active(self) -> list[ServiceModel]:
     return self.find_by_status(ServiceStatus.ACTIVE)
+
+  def find_by_account_id(self, account_id: str) -> list[ServiceModel]:
+    query = "SELECT * FROM services WHERE account_id = :account_id"
+    params = {"account_id": account_id}
+    results = self.db.query(sql=query, params=params)
+    return [ServiceModel.from_dict(row) for row in results]

@@ -1,16 +1,11 @@
 from argon2 import PasswordHasher
-from fastapi import HTTPException
 
 from uuid import uuid4
 
 from relevo.api.middleware import ACCESS_TOKEN_HEADER, validate_access_token
+from relevo.controllers.exceptions.account import AccountNotFoundHttpException
 from relevo.models.account import AccountModel, AccountStatus
 from relevo.repositories.account import AccountRepository
-
-class AccountNotFoundHttpException(HTTPException):
-  def __init__(self):
-    super().__init__(status_code=404, detail="Account not found")
-
 
 class AccountController:
   def __init__(self, repository: AccountRepository | None = None):
