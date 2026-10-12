@@ -1,5 +1,5 @@
 import json
-from uuid import UUID, uuid4
+from uuid import uuid4
 
 from relevo.database.sqlite import SQLite
 from relevo.models.event import EventModel
@@ -10,7 +10,7 @@ class EventRepository:
 
   def create(
     self,
-    service_id: UUID,
+    service_id: str,
     url: str,
     body_payload: str | None = None,
     query_payload: str | None = None,
@@ -23,7 +23,7 @@ class EventRepository:
 
     params = {
       "id": str(uuid4()),
-      "service_id": str(service_id),
+      "service_id": service_id,
       "url": url,
       "body_payload": body_payload or "{}",
       "query_payload": query_payload or "{}",
@@ -34,9 +34,9 @@ class EventRepository:
 
     raise Exception("Failed to create event")
 
-  def find_by_service_id(self, service_id: UUID) -> list[EventModel]:
+  def find_by_service_id(self, service_id: str) -> list[EventModel]:
     query = "SELECT * FROM events WHERE service_id = :service_id"
-    params = {"service_id": str(service_id)}
+    params = {"service_id": service_id}
     results = self.db.query(sql=query, params=params)
     return [EventModel.from_dict(row) for row in results]
 

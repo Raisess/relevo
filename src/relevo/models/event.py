@@ -1,13 +1,14 @@
 import json
-from uuid import UUID
+from dataclasses import dataclass
 
-class EventModel(BaseModel):
-  id: UUID | None = None
-  service_id: UUID | None = None
-  timestamp: str | None = None
+@dataclass
+class EventModel:
+  id: str
+  service_id: str
+  timestamp: str
   url: str
-  body_payload: str = None
-  query_payload: str = None
+  body_payload: str | None = None
+  query_payload: str | None = None
 
   def body_payload_dict(self) -> dict:
     return json.loads(self.body_payload_dict)
@@ -18,8 +19,8 @@ class EventModel(BaseModel):
   @staticmethod
   def from_dict(data: dict) -> "EventModel":
     return EventModel(
-      id=UUID(data.get("id")),
-      service_id=UUID(data.get("service_id")),
+      id=data.get("id"),
+      service_id=data.get("service_id"),
       method=data.get("method"),
       timestamp=str(data.get("timestamp")),
       url=data.get("url"),

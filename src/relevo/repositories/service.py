@@ -1,4 +1,4 @@
-from uuid import UUID, uuid4
+from uuid import uuid4
 
 from relevo.database.sqlite import SQLite
 from relevo.models.service import ServiceModel, ServiceStatus
@@ -10,7 +10,7 @@ class ServiceRepository:
   def create(
     self,
     name: str,
-    account_id: UUID,
+    account_id: str,
     status: ServiceStatus = ServiceStatus.ACTIVE,
   ) -> str:
     query = """
@@ -31,9 +31,9 @@ class ServiceRepository:
 
     raise Exception("Failed to create service")
 
-  def find_by_id(self, id: UUID) -> ServiceModel | None:
+  def find_by_id(self, id: str) -> ServiceModel | None:
     query = "SELECT * FROM services WHERE id = :id"
-    params = {"id": str(id)}
+    params = {"id": id}
     results = self.db.query(sql=query, params=params)
     if results:
       return ServiceModel.from_dict(results[0])
