@@ -14,7 +14,7 @@ class ServiceController:
     self.account_repository = account_repository or AccountRepository()
 
   def create(self, name: str, account_id: str, status: int = None) -> dict:
-    if not self.account_repository.exists_by_id(account_id):
+    if not self.account_repository.exists_by_id_and_is_active(account_id):
       raise AccountNotFoundHttpException()
 
     status = ServiceStatus.ACTIVE if status == 1 or status == None else ServiceStatus.INACTIVE

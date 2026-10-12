@@ -47,8 +47,8 @@ class AccountRepository:
     results = self.db.query(sql=query, params=params)
     return [AccountModel.from_dict(row) for row in results]
 
-  def exists_by_id(self, id: str) -> bool:
-    query = "SELECT 1 FROM accounts WHERE id = :id LIMIT 1"
-    params = {"id": id}
+  def exists_by_id_and_is_active(self, id: str) -> bool:
+    query = "SELECT 1 FROM accounts WHERE id = :id and status = :active_status LIMIT 1"
+    params = {"id": id, "active_status": AccountStatus.ACTIVE.value}
     results = self.db.query(sql=query, params=params)
     return len(results) > 0
